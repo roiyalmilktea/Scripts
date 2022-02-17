@@ -1,1 +1,4 @@
-print('hello')
+
+A = map(int, input().split())
+
+print(A)
