@@ -1,0 +1,8 @@
+find_element_by_tag_name(tag)
+find_element_by_id(ID)
+find_element_by_class_name(class)
+find_element_ny_css_selector(CSS_selecter)
+find_element_by_link_text(text)
+find_element_by_partial_link_text(text)
+find_element_by_xpath(XPath)
+

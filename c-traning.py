@@ -1,5 +1,7 @@
 from selenium import webdriver
 
+from login import login_download
+
 driver = webdriver.Chrome()
 
 url = "https://judge.u-aizu.ac.jp/onlinejudge/signin.jsp"
