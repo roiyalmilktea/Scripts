@@ -39,6 +39,6 @@ def send_gmail(msg):
 
 
 if __name__ == "__main__":
-    schedule.every().tuesday.at("17:09").do(send_test_email())
-    schedule.every().saturday.at("17:09").do(send_test_email())
+    # schedule.every().tuesday.at("17:09").do(send_test_email())
+    schedule.every().saturday.at("18:50").do(send_test_email())
     print('OK')

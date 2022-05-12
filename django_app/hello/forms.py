@@ -10,3 +10,8 @@ class HelloForm(forms.Form):
         attrs={'class': 'form-control'}))
     job = forms.CharField(label='job', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
+
+
+class HelloAnswer(forms.Form):
+    ans = forms.CharField(label='strings', widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
