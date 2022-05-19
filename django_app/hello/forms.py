@@ -6,9 +6,8 @@ class HelloForm(forms.Form):
         attrs={'class': 'form-control'}))
     mail = forms.CharField(label='mail', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    age = forms.IntegerField(label='age', widget=forms.NumberInput(
-        attrs={'class': 'form-control'}))
-    job = forms.CharField(label='job', widget=forms.TextInput(
+
+    other = forms.CharField(label='input other', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
 
 
