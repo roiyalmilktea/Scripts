@@ -20,29 +20,46 @@ def start(request):
 ###########################################################################################
 
 
-def index2(request):
+def forms(request):
     params = {
         'title': 'Hello!',
-        'message': 'What you are data？',
+        'message': 'input',
         'form': HelloForm()
     }
+
     if (request.method == 'POST'):
         params['message'] = 'name:'+request.POST['name']+'<br>mail:' + \
             request.POST['mail']+'<br>age:' + \
             '<br>other:'+request.POST['other']
         params['form'] = HelloForm(request.POST)
-    return render(request, 'hello/index2.html', params)
+
+    return render(request, 'hello/forms.html', params)
+
+####################################################################################################
+# nextはまだ使わない
 
 
-def forms(request):
+def next(request):
 
     params = {
-        'title': 'Hello/Form',
+        'title': 'submmit',
         'msg': 'name',
+        'form': HelloForm(),
+        'goto': 'next',
     }
-    return render(request, 'hello/index2.html', params)
 
-#################################################################################################################################
+    return render(request, 'hello/done.html', params)
+
+####################################################################################################
+
+# 入力後レスポンスを返した
+
+
+def responsed(request):
+    return render(request, 'done.html')
+
+
+# def moved(request):
 
 
 def problem(request):
