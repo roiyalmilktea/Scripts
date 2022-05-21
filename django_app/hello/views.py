@@ -12,7 +12,7 @@ def start(request):
         'title': 'top page',
         'goto_0': 'test_problem',
         'goto_1': 'bufferoverflow',
-        'goto_2': 'xss'
+        'goto_2': 'xss',
     }
 
     return render(request, 'hello/top.html', params)
@@ -20,29 +20,46 @@ def start(request):
 ###########################################################################################
 
 
-def index2(request):
+def forms(request):
     params = {
         'title': 'Hello!',
-        'message': 'What you are data？',
+        'message': 'input',
         'form': HelloForm()
     }
+
     if (request.method == 'POST'):
         params['message'] = 'name:'+request.POST['name']+'<br>mail:' + \
             request.POST['mail']+'<br>age:' + \
-            request.POST['age']+'<br>job:'+request.POST['job']
+            '<br>other:'+request.POST['other']
         params['form'] = HelloForm(request.POST)
-    return render(request, 'hello/index2.html', params)
+
+    return render(request, 'hello/forms.html', params)
+
+####################################################################################################
+# nextはまだ使わない
 
 
-def forms(request):
-    msg = request.POST['msg']
+def next(request):
+
     params = {
-        'title': 'Hello/Form',
-        'msg': 'hello!' + msg,
+        'title': 'submmit',
+        'msg': 'name',
+        'form': HelloForm(),
+        'goto': 'next',
     }
-    return render(request, 'hello/index2.html', params)
 
-#################################################################################################################################
+    return render(request, 'hello/done.html', params)
+
+####################################################################################################
+
+# 入力後レスポンスを返した
+
+
+def responsed(request):
+    return render(request, 'done.html')
+
+
+# def moved(request):
 
 
 def problem(request):
@@ -64,8 +81,5 @@ def bufferoverflow(request):
 
 
 def xss(request):
-    params = {
-        'title': 'web',
-        'goto': 'xss'
-    }
-    return render(request, 'hello/reflected_xss.html', params)
+
+    return render(request, 'hello/xss.php')
