@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import HelloForm
 from .forms import HelloAnswer
+
 # Create your views here.
 # HttpResponse　クラスをimportする
 
@@ -21,47 +22,56 @@ def start(request):
 
 
 def forms(request):
-    params = {
-        'title': 'Hello!',
-        'message': 'input',
-        'form': HelloForm()
-    }
+    if 'msg' in request.GET:
+        msg = request.GET['msg']
+        result = msg
 
-    if (request.method == 'POST'):
-        params['message'] = 'name:'+request.POST['name']+'<br>mail:' + \
-            request.POST['mail']+'<br>age:' + \
-            '<br>other:'+request.POST['other']
-        params['form'] = HelloForm(request.POST)
+    else:
+        result = 'please sent msg parameter!'
 
-    return render(request, 'hello/forms.html', params)
+    return HttpResponse(result)
 
 ####################################################################################################
-# nextはまだ使わない
 
 
 def next(request):
 
     params = {
-        'title': 'submmit',
-        'msg': 'name',
-        'form': HelloForm(),
-        'goto': 'next',
+        'title': 'submmited',
+        'msg': 'data',
+        'form': HelloForm()
     }
-
+    if (request.method == 'POST'):
+        params['message'] = '名前:'+request.POST['name']+'<br>mail:' + \
+            request.POST['mail']+'<br>age:' + \
+            '<br>other:'+request.POST['other']
+        params['form'] = HelloForm(request.POST)
     return render(request, 'hello/done.html', params)
 
-####################################################################################################
-
-# 入力後レスポンスを返した
+##################################################################################################
 
 
-def responsed(request):
-    return render(request, 'done.html')
+class HelloView(TemplateView):
+    def __init__(self):
+        self.params = {
+            'title': 'Hello!',
+            'message': 'input',
+            'form': HelloForm()
+        }
+
+    def get(self, request):
+        return render(request, 'hello/forms.html', self.params)
+
+    def post(self, request):
+        msg = request.POST['name']+request.POST['mail']+request.POST['other']
+
+        self.params['message'] = msg
+        self.params['form'] = HelloForm(request.POST)
+
+        return render(request, 'hello/forms.html', self.params)
 
 
-# def moved(request):
-
-
+##########################################################################################################
 def problem(request):
     params = {
         'title': 'list',
@@ -79,7 +89,4 @@ def bufferoverflow(request):
     }
     return render(request, 'hello/c_lang.html', params)
 
-
-def xss(request):
-
-    return render(request, 'hello/xss.php')
+##########################################################################################################

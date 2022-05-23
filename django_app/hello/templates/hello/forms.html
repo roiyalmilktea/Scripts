@@ -10,10 +10,11 @@
     </head>
 <body class="container">
     <h1 class="display-4 text-primary">{{title}}</h1>
+    <p>{{msg|safe}}</p>
 
-    <form action="{% url 'next' %}" method="post">
+    <form action="{% url 'forms' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_ul }}
         <input type="submit" value="click">
     </form>
 </body>
