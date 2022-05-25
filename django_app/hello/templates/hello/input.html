@@ -10,7 +10,7 @@
     <body>
         <h1>{{title}}</h1>
         <p>{{msg}}</p>
-        <form action= "{% url 'form' %}" method = "post"> <!--ここのフォーム使うとformのURLに飛びます-->    
+        <form action= "{% url 'forms' %}" method = "post"> <!--ここのフォーム使うとformのURLに飛びます-->    
             {% csrf_token %} <!--CSRF対策-->    
             <label for = "msg">ここに入力：</label> <!--入力項目ラベル-->    
             <input id = "msg" type="text" name ="msg"> <!--入力フォーム-->    

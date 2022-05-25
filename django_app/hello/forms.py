@@ -7,7 +7,7 @@ class HelloForm(forms.Form):
     mail = forms.CharField(label='mail', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
 
-    other = forms.CharField(label='input other', widget=forms.TextInput(
+    other = forms.CharField(label='other', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
 
 
