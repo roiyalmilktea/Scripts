@@ -5,9 +5,29 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def index():
-    name = request.args.get('name', 'unknown')
-    return f'<p>Hello, {name}!</p>'
+def route(user=''):
+    username = request.query.get('user')
+    username = '' if username is None else username
+
+    html = '''
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <title>脆弱性</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h1>Webアプリケーション攻撃手法</h1>
+        <ul>
+            <li>web</li>
+            add<br>
+            <a href="http://localhost:8000/hello/xss">url</a>
+            </body>
+    </html>'''
+
+    return html
 
 
-app.run(host='localhost', port=5000)
+if __name__ == '__main__':
+    app.debug = True
+    app.run(host='localhost', port=5000)

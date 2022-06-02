@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import HelloForm
+from django.http import request
+#from .reflect import Route
 #from .forms import HelloAnswer
+
 
 # Create your views here.
 # HttpResponse　クラスをimportする
@@ -21,23 +24,13 @@ def start(request):
 ###########################################################################################
 
 
-####################################################################################################
-
-
-def forms(request):
-
+def xss(request):
     params = {
-        'title': 'Hello',
-        'msg': 'input',
-        'form': HelloForm()
-    }
-    if (request.method == 'POST'):
-        params['message'] = 'name:'+request.POST['name']+'<br>mail:' + \
-            request.POST['mail']+'<br>age:' + \
-            '<br>other:'+request.POST['other']
-        params['form'] = HelloForm(request.POST)
-    return render(request, 'hello/forms.html', params)
+        'title': 'val',
+        'input': 'strings'
 
+    }
+    return render(request, 'hello/click.html', params)
 
 ##################################################################################################
 
@@ -54,7 +47,7 @@ class HelloView(TemplateView):
         return render(request, 'hello/forms.html', self.params)
 
     def post(self, request):
-        msg = 'name:'+request.POST['name']+' mail:' + \
+        msg = 'name:'+request.POST['name'] + ' mail:' + \
             request.POST['mail']+' other:'+request.POST['other']
 
         # 2922/5/24　messageというパラメータを渡すはずが、forms.htmlでmsgにしていたからエラーになった
@@ -86,3 +79,11 @@ def bufferoverflow(request):
     return render(request, 'hello/c_lang.html', params)
 
 ##########################################################################################################
+
+
+def reflect(request):
+    username = request.query.get('user')
+    username = '' if username is None else username
+    html = "<h2>Hello{name}</h2>".format(name=username)
+
+    return render(request, html)

@@ -1,16 +1,20 @@
 import requests
 
-acc_token = 'l6Ij9QW8CyZ4ta0c5yFDKhFOkYaaMa4dXO6nJTaqORz'
+
+def main():
+    send_line_notify('hello! notify')
 
 
-def send_line(msg):
+def send_line_notify(notification_message):
+    """
+    LINEに通知する
+    """
+    line_notify_token = 'YDIy66MOGRxPuRiN65b7uFtAPLarIs4yX6GxoMjWWve'
+    line_notify_api = 'https://notify-api.line.me/api/notify'
+    headers = {'Authorization': f'Bearer {line_notify_token}'}
+    data = {'message': f'message: {notification_message}'}
+    requests.post(line_notify_api, headers=headers, data=data)
 
-    url = 'https://notify-api.line.me/api/notify'
-    headers = {'Authorization': 'Bearer' + acc_token}
-    payload = {'message': msg}
-    requests.post(url, headers=headers, params=payload)
 
-
-if __name__ == '__main__':
-    send_line('Pythonからこんにちは！')
-    print('OK')
+if __name__ == "__main__":
+    main()
