@@ -1,16 +1,13 @@
 from selenium import webdriver
 
+driver = webdriver.Chrome()
 
-print('login?')
+url = "https://google.com"
 
-n = int(input())
 
-if n == 1:
-    driver = webdriver.Chrome()
-    url = "https://accounts.google.com/signin"
+def login():
+    driver.get(url)
 
-    def login():
-        driver.get(url)
-    if __name__ == '__main__':
-        login()
-        
+
+if __name__ == '__main__':
+    login()

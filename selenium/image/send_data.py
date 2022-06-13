@@ -54,5 +54,6 @@ def func():
     server.quit()
 
 
+# メイン処理実行
 if __name__ == '__main__':
     func()
