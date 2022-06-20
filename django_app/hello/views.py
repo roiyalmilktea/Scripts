@@ -2,13 +2,23 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import HelloForm
+from .forms import InputForm
 from django.http import request
-#from .reflect import Route
-#from .forms import HelloAnswer
-
-
+from .models import Friend
+import sqlite3
+from .forms import HelloAnswer
 # Create your views here.
 # HttpResponse　クラスをimportする
+
+
+def index(request):
+    data = Friend.object.all()
+    params = {
+        'title': 'Hello',
+        'message': 'all friends.',
+        'data': 'data',
+    }
+    return render(request, 'hello/index.html', params)
 
 
 def start(request):
@@ -81,9 +91,4 @@ def bufferoverflow(request):
 ##########################################################################################################
 
 
-def reflect(request):
-    username = request.query.get('user')
-    username = '' if username is None else username
-    html = "<h2>Hello{name}</h2>".format(name=username)
-
-    return render(request, html)
+class 

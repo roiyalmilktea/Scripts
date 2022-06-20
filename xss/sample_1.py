@@ -15,8 +15,8 @@ def hello(user=''):
 
     html = "<h2>Persistent XSS Demo</h2>"
     html += "<form action='./' method='POST'>"
-    html += "タスク名: <input type='text' name='name' /><br>"
-    html += "内容: <input type='text' name='detail' /><br>"
+    html += "task name: <input type='text' name='name' /><br>"
+    html += "content: <input type='text' name='detail' /><br>"
     html += "<input type='submit' name='register' value='登録'/>"
     html += "</form>"
     html += tasks

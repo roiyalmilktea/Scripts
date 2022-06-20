@@ -14,3 +14,9 @@ class HelloForm(forms.Form):
 class HelloAnswer(forms.Form):
     ans = forms.CharField(label='strings', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
+
+
+class InputForm(forms.Form):
+    strings = forms.CharField(label='name', widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
