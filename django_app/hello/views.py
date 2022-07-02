@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import HelloForm
-from .forms import InputForm
+from .forms import HelloAnswer
+#from .forms import InputForm
 from django.http import request
 from .models import Friend
 import sqlite3
-from .forms import HelloAnswer
+
 # Create your views here.
 # HttpResponse　クラスをimportする
 
@@ -26,7 +26,7 @@ def start(request):
         'title': 'top page',
         'goto_0': 'test_problem',
         'goto_1': 'bufferoverflow',
-        # 'goto_2': 'xss',
+        'goto_2': 'xss',
     }
 
     return render(request, 'hello/top.html', params)
@@ -50,22 +50,26 @@ class HelloView(TemplateView):
         self.params = {
             'title': 'Hello!',
             'message': 'your data',
-            'form': HelloForm()
+            'form': HelloAnswer(),
+            'result': None
         }
 
     def get(self, request):
-        return render(request, 'hello/forms.html', self.params)
+        return render(request, 'hello/form.html', self.params)
 
     def post(self, request):
         msg = 'name:'+request.POST['name'] + ' mail:' + \
             request.POST['mail']+' other:'+request.POST['other']
 
+        ch = request.POST['choice']
+        self.params['result'] = 'selected:"' + ch + '".'
+
         # 2922/5/24　messageというパラメータを渡すはずが、forms.htmlでmsgにしていたからエラーになった
         self.params['message'] = msg
 
-        self.params['form'] = HelloForm(request.POST)
+        self.params['form'] = HelloAnswer(request.POST)
 
-        return render(request, 'hello/forms.html', self.params)
+        return render(request, 'hello/form.html', self.params)
 
 
 ##########################################################################################################
@@ -76,19 +80,18 @@ def problem(request):
         'title': 'list',
         'msg': 'test',
         'goto_1': 'bufferoverflow',
-        'goto_2': 'xss',
+        'goto_2': 'xss_1',
+        'goto_3': 'xss_2',
     }
     return render(request, 'hello/problem.html', params)
 
 
 def bufferoverflow(request):
-    params = {
-        'title': 'You must learn C lang.',
-        'goto': 'c_lang'
-    }
-    return render(request, 'hello/c_lang.html', params)
+    def func():
+        params = {
+            'title': 'You must learn C lang.',
+            'goto': 'c_lang'
+        }
+        return render(request, 'hello/c_lang.html', params)
 
 ##########################################################################################################
-
-
-class 

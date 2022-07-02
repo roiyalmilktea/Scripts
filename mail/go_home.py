@@ -25,8 +25,6 @@ def func():
     msg['From'] = gmail_account
     msg['To'] = to_mail
 
-  
-
     # メールサーバへのアクセス
     server = smtplib.SMTP(smtp_host, smtp_port)
     server.ehlo()
@@ -39,7 +37,7 @@ def func():
 
 if __name__ == '__main__':
     func()
-    schedule.every().day.at("16:16").do(func)
+    schedule.every().day.at("08:16").do(func)
 
     while True:
         schedule.run_pending()

@@ -1,4 +1,5 @@
 from flask import Flask, request
+import requests
 
 
 app = Flask(__name__)
@@ -6,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def route(user=''):
-    username = request.query.get('user')
+    username = requests.query.get('user')
     username = '' if username is None else username
 
     html = '''

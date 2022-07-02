@@ -10,7 +10,7 @@ def task():
 
 
 # 02 スケジュール登録
-schedule.every().days.at("06:40").do(task)
+schedule.every().days.at("07:40").do(task)
 
 
 # 03 イベント実行
