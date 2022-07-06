@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import HelloAnswer
-#from .forms import InputForm
+from .forms import HelloSearch
 from django.http import request
 from .models import Friend
 import sqlite3
@@ -12,13 +12,25 @@ import sqlite3
 
 
 def index(request):
-    data = Friend.object.all()
+    data = Friend.objects.all()
     params = {
         'title': 'Hello',
-        'message': 'all friends.',
-        'data': 'data',
+        'message': 'all friends list.',
+        'form': HelloSearch(),
+        'data': data,
+
     }
+    if (request.method == 'POST'):
+        num = request.POST['id']
+        item = Friend.objects.get(id=num)
+        params['data'] = [item]
+        params['form'] = HelloSearch(request.POST)
+    else:
+        params['data'] = Friend.objects.all()
+
     return render(request, 'hello/index.html', params)
+
+###########################################################################################
 
 
 def start(request):
@@ -34,17 +46,6 @@ def start(request):
 ###########################################################################################
 
 
-def xss(request):
-    params = {
-        'title': 'val',
-        'input': 'strings'
-
-    }
-    return render(request, 'hello/click.html', params)
-
-##################################################################################################
-
-
 class HelloView(TemplateView):
     def __init__(self):
         self.params = {
@@ -58,14 +59,13 @@ class HelloView(TemplateView):
         return render(request, 'hello/form.html', self.params)
 
     def post(self, request):
-        msg = 'name:'+request.POST['name'] + ' mail:' + \
-            request.POST['mail']+' other:'+request.POST['other']
 
         ch = request.POST['choice']
         self.params['result'] = 'selected:"' + ch + '".'
 
         # 2922/5/24　messageというパラメータを渡すはずが、forms.htmlでmsgにしていたからエラーになった
-        self.params['message'] = msg
+        #self.params['form'] = HelloAnswer(request.POST)
+        self.params['message'] = HelloAnswer(request.POST)
 
         self.params['form'] = HelloAnswer(request.POST)
 
@@ -87,11 +87,11 @@ def problem(request):
 
 
 def bufferoverflow(request):
-    def func():
-        params = {
-            'title': 'You must learn C lang.',
-            'goto': 'c_lang'
-        }
-        return render(request, 'hello/c_lang.html', params)
+
+    params = {
+        'title': 'You must learn C lang.',
+        'goto': 'c_lang'
+    }
+    return render(request, 'hello/c_lang.html', params)
 
 ##########################################################################################################

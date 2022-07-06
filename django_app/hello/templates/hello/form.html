@@ -10,12 +10,12 @@
     </head>
 <body class="container">
     <h1 class="display-4 text-primary">{{title}}</h1>
-    <p>{{message}}</p><br>
-    this is sample page.
+    <p class="h5 mt-4">{{message|safe}}</p><br>
 
     <form action="{% url 'forms' %}" method="post">
         {% csrf_token %}
         {{ form }}
+        <br>
         <input type="submit" value="click">
     </form>
 </body>
