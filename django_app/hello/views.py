@@ -1,10 +1,36 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .forms import HelloForm
 from .forms import HelloAnswer
+from .forms import HelloSearch
+from django.http import request
+from .models import Friend
+import sqlite3
+
 # Create your views here.
 # HttpResponse　クラスをimportする
+
+
+def index(request):
+    data = Friend.objects.all()
+    params = {
+        'title': 'Hello',
+        'message': 'all friends list.',
+        'form': HelloSearch(),
+        'data': data,
+
+    }
+    if (request.method == 'POST'):
+        num = request.POST['id']
+        item = Friend.objects.get(id=num)
+        params['data'] = [item]
+        params['form'] = HelloSearch(request.POST)
+    else:
+        params['data'] = Friend.objects.all()
+
+    return render(request, 'hello/index.html', params)
+
+###########################################################################################
 
 
 def start(request):
@@ -20,46 +46,33 @@ def start(request):
 ###########################################################################################
 
 
-def forms(request):
-    params = {
-        'title': 'Hello!',
-        'message': 'input',
-        'form': HelloForm()
-    }
+class HelloView(TemplateView):
+    def __init__(self):
+        self.params = {
+            'title': 'Hello!',
+            'message': 'your data',
+            'form': HelloAnswer(),
+            'result': None
+        }
 
-    if (request.method == 'POST'):
-        params['message'] = 'name:'+request.POST['name']+'<br>mail:' + \
-            request.POST['mail']+'<br>age:' + \
-            '<br>other:'+request.POST['other']
-        params['form'] = HelloForm(request.POST)
+    def get(self, request):
+        return render(request, 'hello/form.html', self.params)
 
-    return render(request, 'hello/forms.html', params)
+    def post(self, request):
 
-####################################################################################################
-# nextはまだ使わない
+        ch = request.POST['choice']
+        self.params['result'] = 'selected:"' + ch + '".'
 
+        # 2922/5/24　messageというパラメータを渡すはずが、forms.htmlでmsgにしていたからエラーになった
+        #self.params['form'] = HelloAnswer(request.POST)
+        self.params['message'] = HelloAnswer(request.POST)
 
-def next(request):
+        self.params['form'] = HelloAnswer(request.POST)
 
-    params = {
-        'title': 'submmit',
-        'msg': 'name',
-        'form': HelloForm(),
-        'goto': 'next',
-    }
-
-    return render(request, 'hello/done.html', params)
-
-####################################################################################################
-
-# 入力後レスポンスを返した
+        return render(request, 'hello/form.html', self.params)
 
 
-def responsed(request):
-    return render(request, 'done.html')
-
-
-# def moved(request):
+##########################################################################################################
 
 
 def problem(request):
@@ -67,19 +80,18 @@ def problem(request):
         'title': 'list',
         'msg': 'test',
         'goto_1': 'bufferoverflow',
-        'goto_2': 'xss',
+        'goto_2': 'xss_1',
+        'goto_3': 'xss_2',
     }
     return render(request, 'hello/problem.html', params)
 
 
 def bufferoverflow(request):
+
     params = {
         'title': 'You must learn C lang.',
         'goto': 'c_lang'
     }
     return render(request, 'hello/c_lang.html', params)
 
-
-def xss(request):
-
-    return render(request, 'hello/xss.php')
+##########################################################################################################
