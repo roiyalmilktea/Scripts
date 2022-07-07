@@ -5,6 +5,7 @@ from .forms import HelloAnswer
 from .forms import HelloSearch
 from django.http import request
 from .models import Friend
+from .models import Job
 import sqlite3
 
 # Create your views here.
@@ -38,7 +39,7 @@ def start(request):
         'title': 'top page',
         'goto_0': 'test_problem',
         'goto_1': 'bufferoverflow',
-        'goto_2': 'xss',
+
     }
 
     return render(request, 'hello/top.html', params)
@@ -48,10 +49,12 @@ def start(request):
 
 class HelloView(TemplateView):
     def __init__(self):
+
         self.params = {
             'title': 'Hello!',
             'message': 'your data',
             'form': HelloAnswer(),
+
             'result': None
         }
 
@@ -64,8 +67,9 @@ class HelloView(TemplateView):
         self.params['result'] = 'selected:"' + ch + '".'
 
         # 2922/5/24　messageというパラメータを渡すはずが、forms.htmlでmsgにしていたからエラーになった
-        #self.params['form'] = HelloAnswer(request.POST)
-        self.params['message'] = HelloAnswer(request.POST)
+        msg = 'strings:'+request.POST['strings']+'<br>' + \
+            'name:'+request.POST['name']+'<br>'+'mail:'+request.POST['mail']
+        self.params['message'] = msg
 
         self.params['form'] = HelloAnswer(request.POST)
 
@@ -77,7 +81,7 @@ class HelloView(TemplateView):
 
 def problem(request):
     params = {
-        'title': 'list',
+        'title': 'start problem',
         'msg': 'test',
         'goto_1': 'bufferoverflow',
         'goto_2': 'xss_1',

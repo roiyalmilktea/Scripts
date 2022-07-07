@@ -4,3 +4,6 @@ import requests
 
 
 def func():
+	url = "htt"
+
+	
