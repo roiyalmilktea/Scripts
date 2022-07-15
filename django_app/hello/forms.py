@@ -10,7 +10,7 @@ class HelloAnswer(forms.Form):
     mail = forms.CharField(label='mail', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
 
-    data = [('one', 'xss'), ('two', 'sqli'), ('three', 'oscmmand')]
+    data = [('xss', 'xss'), ('sqli', 'sqli'), ('oscommandi', 'oscommandi')]
 
     choice = forms.ChoiceField(label='Choice', choices=data)
 

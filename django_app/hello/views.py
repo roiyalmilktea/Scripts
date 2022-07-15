@@ -68,7 +68,8 @@ class HelloView(TemplateView):
 
         # 2922/5/24　messageというパラメータを渡すはずが、forms.htmlでmsgにしていたからエラーになった
         msg = 'strings:'+request.POST['strings']+'<br>' + \
-            'name:'+request.POST['name']+'<br>'+'mail:'+request.POST['mail']
+            'name:'+request.POST['name']+'<br>'+'mail:' + \
+            request.POST['mail']+'<br>'+'choice:'+request.POST['choice']
         self.params['message'] = msg
 
         self.params['form'] = HelloAnswer(request.POST)
