@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>wordlist_page</title>
+</head>
+<body>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>code</th>
+                    <th>word</th>
+                    <th>mean</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr>
+                    <th>{{item[0]}}</th>
+                    <th>{{item[1]}}</th>
+                    <th>{{item[2]}}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+    <form action='/result'>
+        <p>register</p>
+        <label>
+            word    
+            <input type="text" name="word">
+        </label>
+        <label >
+            mean
+            <input type="text" name="mean">       
+        </label>
+        <button type="submit" formmethod="POST">register</button>
+    </form>
+</body>
+</html>
