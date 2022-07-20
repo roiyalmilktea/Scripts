@@ -47,7 +47,7 @@ def index():
     data = cur.fetchall()
     con.close()
 
-    return render_template('index.html', data=data)
+    return render_template('dictionary.html', data=data)
 
 
 @app.route('/result', methods=["POST"])
@@ -76,7 +76,7 @@ def result_post():
     data = cur.fetchall()
     con.close()
 
-    return render_template('index.html', data=data)
+    return render_template('dictionary.html', data=data)
 
 
 if __name__ == '__main__':

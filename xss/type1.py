@@ -19,7 +19,7 @@ def index():
 
     # テーブル「商品一覧」の有無を確認
     cur = con.execute(
-        "select count(*) from wordlist where TYPE='table' AND name='list'")
+        "select count(*) from sqlite_master where TYPE='table' AND name='wordlist'")
 
     for row in cur:
         if row[0] == 0:
@@ -29,8 +29,9 @@ def index():
             # レコードを作る
             cur.execute(
                 """INSERT INTO wordlist(code, word, mean) 
-                values(1, 'hello','コンニチワ' ),
-              
+                values(1, 'hello', 'コンニチワ'),
+                (2, 'goodmorning','オイーッス')
+                
                 """)
             con.commit()
 
@@ -59,7 +60,7 @@ def result_post():
     cur.close()
 
     # 登録処理
-    sql = "INSERT INTO wordlist(code, word, mean)values({},'{}',{})".format(
+    sql = "INSERT INTO wordlist(code, word, mean)values({},'{}','{}')".format(
         new_code, word, mean)
     con.execute(sql)
     con.commit()
